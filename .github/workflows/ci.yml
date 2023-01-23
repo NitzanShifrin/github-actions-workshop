@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
-          cache: 'yarn'
+          cache: yarn
 
       - name: Cache yarn dependencies
         uses: actions/cache@v2
@@ -27,7 +27,11 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
+
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install
 
   lint:
     needs: cache
@@ -51,7 +55,7 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -83,7 +87,7 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -115,7 +119,7 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
