@@ -27,7 +27,7 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}-2
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -55,7 +55,7 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}-2
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -87,7 +87,7 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}-2
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -119,7 +119,7 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}-2
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
