@@ -6,9 +6,8 @@ on:
       - add-more-ci-commands
 
 jobs:
-  lint:
+  cache:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,7 +27,31 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}-lint
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
+
+  lint:
+    needs: cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup NodeJS 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Cache yarn dependencies
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            /home/runner/.cache/Cypress
+            **/node_modules
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -38,8 +61,8 @@ jobs:
         run: yarn lint:ci
 
   test:
+    needs: cache
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -60,7 +83,7 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}-test
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock.json') }}
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -70,6 +93,7 @@ jobs:
         run: yarn test:ci
 
   e2e:
+    needs: cache
     runs-on: ubuntu-latest
 
     steps:
@@ -91,7 +115,7 @@ jobs:
           path: |
             /home/runner/.cache/Cypress
             **/node_modules
-          key: our-cache-yarn-${{ hashFiles('**/yarn.lock') }}-e2e
+          key: our-cache-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
