@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - main3
+      - add-more-ci-commands
 
 jobs:
   build-test:
