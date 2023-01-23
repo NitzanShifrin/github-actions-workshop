@@ -6,7 +6,7 @@ on:
       - add-more-ci-commands
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,12 +24,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Test
-        run: yarn test:ci
-
-      - name: e2e
-        run: yarn e2e
-
+      - name: Lint
+        run: yarn lint:ci
+        
   test:
     runs-on: ubuntu-latest
 
